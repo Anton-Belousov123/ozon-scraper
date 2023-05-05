@@ -5,6 +5,7 @@ from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @dataclass()
@@ -20,7 +21,7 @@ class Scraper:
     def scrape_item(self, text: str):
         options = uc.ChromeOptions()
         options.add_argument('--headless')
-        browser = uc.Chrome(use_subprocess=True, options=options)
+        browser = uc.Chrome(ChromeDriverManager().install(), use_subprocess=True, options=options)
         browser.maximize_window()
         browser.get(f"https://www.ozon.ru/search/?from_global=true&text={text}")
         time.sleep(2)
