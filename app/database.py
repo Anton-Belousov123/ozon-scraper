@@ -23,6 +23,9 @@ class DBObj:
 class Database:
     def __init__(self):
         self.table_name = 'kamran'
+
+
+    def get_code(self):
         self.conn = psycopg2.connect(
             host=secret.DATABASE_HOST,
             database=secret.DATABASE_NAME,
@@ -30,8 +33,6 @@ class Database:
             password=secret.DATABASE_PASSWORD,
         )
         self.cur = self.conn.cursor()
-
-    def get_code(self):
         self.cur.execute(f"SELECT * FROM {self.table_name} WHERE stage=%s", ("Source parsed",))
         record = self.cur.fetchone()
         if not record:
@@ -39,8 +40,15 @@ class Database:
         return DBObj(
             record[0], record[1], record[2], record[3], record[4], record[5], record[6], record[7], record[8],
             record[9], record[10], record[11])
-
+        self.conn.close()
     def update_item(self, items: list[Item], dbobj: DBObj):
+        self.conn = psycopg2.connect(
+            host=secret.DATABASE_HOST,
+            database=secret.DATABASE_NAME,
+            user=secret.DATABASE_LOGIN,
+            password=secret.DATABASE_PASSWORD,
+        )
+        self.cur = self.conn.cursor()
         self.cur.execute(f'DELETE FROM {self.table_name} WHERE s_article=%s AND t_type=%s', (dbobj.s_article, 'ozon'))
         for item in items:
             self.cur.execute(
@@ -50,3 +58,4 @@ class Database:
                  item.photo, item.price, 'ozon', 'Target parsed', item.article)
             )
         self.conn.commit()
+        self.conn.close()

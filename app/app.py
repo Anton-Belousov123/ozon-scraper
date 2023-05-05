@@ -12,5 +12,8 @@ def start_app():
         if not dbobj:
             time.sleep(60)
             continue
-        item = scraper.scrape_item(dbobj.s_name)
+        try:
+            item = scraper.scrape_item(dbobj.s_name)
+        except:
+            item = []
         database.update_item(item, dbobj)
