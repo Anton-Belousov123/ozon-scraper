@@ -14,6 +14,7 @@ def start_app():
             continue
         try:
             item = scraper.scrape_item(dbobj.s_name)
-        except:
+        except Exception:
             item = []
+        print(item)
         database.update_item(item, dbobj)
