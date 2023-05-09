@@ -80,3 +80,6 @@ class Scraper:
             except:
                 pass
         return response
+
+sc = Scraper()
+print(sc.scrape_item('руль'))

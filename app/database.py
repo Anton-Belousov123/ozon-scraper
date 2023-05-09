@@ -22,7 +22,7 @@ class DBObj:
 
 class Database:
     def __init__(self):
-        self.table_name = 'kamran'
+        pass
 
 
     def get_code(self):

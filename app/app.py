@@ -7,8 +7,9 @@ from app.scraper import Scraper
 def start_app():
     database = Database()
     scraper = Scraper()
+    table_name = 'kamran'
     while True:
-        dbobj = database.get_code()
+        dbobj = database.get_code(table_name)
         if not dbobj:
             time.sleep(60)
             continue
@@ -17,4 +18,8 @@ def start_app():
         except Exception:
             item = []
         print(item)
-        database.update_item(item, dbobj)
+        database.update_item(item, dbobj, table_name)
+        if table_name == 'kamran':
+            table_name = 'oleg'
+        else:
+            table_name = 'kamran'
