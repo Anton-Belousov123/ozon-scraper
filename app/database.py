@@ -25,7 +25,7 @@ class Database:
         pass
 
 
-    def get_code(self):
+    def get_code(self, table_name):
         self.conn = psycopg2.connect(
             host=secret.DATABASE_HOST,
             database=secret.DATABASE_NAME,
@@ -33,7 +33,7 @@ class Database:
             password=secret.DATABASE_PASSWORD,
         )
         self.cur = self.conn.cursor()
-        self.cur.execute(f"SELECT * FROM {self.table_name} WHERE stage=%s", ("Source parsed",))
+        self.cur.execute(f"SELECT * FROM {table_name} WHERE stage=%s", ("Source parsed",))
         record = self.cur.fetchone()
         if not record:
             return None
@@ -41,7 +41,7 @@ class Database:
             record[0], record[1], record[2], record[3], record[4], record[5], record[6], record[7], record[8],
             record[9], record[10], record[11])
         self.conn.close()
-    def update_item(self, items: list[Item], dbobj: DBObj):
+    def update_item(self, items: list[Item], dbobj: DBObj, table_name):
         self.conn = psycopg2.connect(
             host=secret.DATABASE_HOST,
             database=secret.DATABASE_NAME,
@@ -49,7 +49,7 @@ class Database:
             password=secret.DATABASE_PASSWORD,
         )
         self.cur = self.conn.cursor()
-        self.cur.execute(f'DELETE FROM {self.table_name} WHERE s_article=%s AND t_type=%s', (dbobj.s_article, 'ozon'))
+        self.cur.execute(f'DELETE FROM {table_name} WHERE s_article=%s AND t_type=%s', (dbobj.s_article, 'ozon'))
         for item in items:
             self.cur.execute(
                 f"INSERT INTO {self.table_name} (s_article, s_name, s_url, s_photo, s_price, t_name, t_url, t_photo, t_price, t_type, stage, t_article) "
