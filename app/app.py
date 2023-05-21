@@ -7,11 +7,17 @@ from app.scraper import Scraper
 def start_app():
     database = Database()
     scraper = Scraper()
-    table_name = 'kamran'
+    fl = False
     while True:
+        if not fl:
+            table_name = 'kamran'
+            fl = True
+        else:
+            fl = False
+            table_name = 'oleg'
         dbobj = database.get_code(table_name)
         if not dbobj:
-            time.sleep(60)
+            time.sleep(10)
             continue
         try:
             item = scraper.scrape_item(dbobj.s_name)
@@ -19,7 +25,3 @@ def start_app():
             item = []
         print(item)
         database.update_item(item, dbobj, table_name)
-        if table_name == 'kamran':
-            table_name = 'oleg'
-        else:
-            table_name = 'kamran'
