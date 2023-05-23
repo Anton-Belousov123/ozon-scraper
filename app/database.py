@@ -24,6 +24,17 @@ class Database:
     def __init__(self):
         pass
 
+    def delete_item(self, dbobj: DBObj):
+        self.conn = psycopg2.connect(
+            host=secret.DATABASE_HOST,
+            database=secret.DATABASE_NAME,
+            user=secret.DATABASE_LOGIN,
+            password=secret.DATABASE_PASSWORD,
+        )
+        self.cur = self.conn.cursor()
+        self.cur.execute('UPDATE oleg SET stage=%s WHERE s_article=%s;', ('Ozon error', dbobj.s_article))
+        self.conn.commit()
+        self.conn.close()
 
     def get_code(self, table_name):
         self.conn = psycopg2.connect(

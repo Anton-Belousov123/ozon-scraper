@@ -16,13 +16,14 @@ def start_app():
             fl = False
             table_name = 'oleg'
         dbobj = database.get_code(table_name)
-        print(table_name, dbobj)
         if not dbobj:
             time.sleep(10)
             continue
         try:
             item = scraper.scrape_item(dbobj.s_name)
-        except Exception:
-            item = []
-        print(item)
-        database.update_item(item, dbobj, table_name)
+            print('added', table_name)
+            database.update_item(item, dbobj, table_name)
+        except Exception as e:
+            print('error', table_name)
+            database.delete_item(dbobj)
+
