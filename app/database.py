@@ -60,7 +60,7 @@ class Database:
             password=secret.DATABASE_PASSWORD,
         )
         self.cur = self.conn.cursor()
-        self.cur.execute(f'DELETE FROM {table_name} WHERE s_article=%s;', (dbobj.s_article, 'ozon'))
+        self.cur.execute(f'DELETE FROM {table_name} WHERE s_article=%s;', (dbobj.s_article,))
         for item in items:
             self.cur.execute(
                 f"INSERT INTO {self.table_name} (s_article, s_name, s_url, s_photo, s_price, t_name, t_url, t_photo, t_price, t_type, stage, t_article) "
