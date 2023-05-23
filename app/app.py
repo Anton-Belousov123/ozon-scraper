@@ -21,9 +21,9 @@ def start_app():
             continue
         try:
             item = scraper.scrape_item(dbobj.s_name)
-            print('added', table_name)
+            print('added', table_name, dbobj)
             database.update_item(item, dbobj, table_name)
         except Exception as e:
-            print('error', table_name)
+            print('error', table_name, dbobj)
             database.delete_item(dbobj)
 
