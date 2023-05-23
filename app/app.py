@@ -24,6 +24,7 @@ def start_app():
             print('added', table_name, dbobj)
             database.update_item(item, dbobj, table_name)
         except Exception as e:
+            print(e)
             print('error', table_name, dbobj)
             database.delete_item(dbobj)
 
