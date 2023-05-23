@@ -63,7 +63,7 @@ class Database:
         self.cur.execute(f'DELETE FROM {table_name} WHERE s_article=%s;', (dbobj.s_article,))
         for item in items:
             self.cur.execute(
-                f"INSERT INTO {self.table_name} (s_article, s_name, s_url, s_photo, s_price, t_name, t_url, t_photo, t_price, t_type, stage, t_article) "
+                f"INSERT INTO {table_name} (s_article, s_name, s_url, s_photo, s_price, t_name, t_url, t_photo, t_price, t_type, stage, t_article) "
                 f"VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (dbobj.s_article, dbobj.s_name, dbobj.s_url, dbobj.s_photo, dbobj.s_price, item.name, item.url,
                  item.photo, item.price, 'ozon', 'Target parsed', item.article)
