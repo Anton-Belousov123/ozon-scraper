@@ -26,5 +26,5 @@ def start_app():
         except Exception as e:
             print(e)
             print('error', table_name, dbobj)
-            database.delete_item(dbobj)
+            database.delete_item(dbobj, table_name)
 
