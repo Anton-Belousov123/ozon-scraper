@@ -19,6 +19,12 @@ class Item:
 
 class Scraper:
     def scrape_item(self, text: str):
+        text = text.split()
+        if len(text) > 8:
+            text = ' '.join(text[:8])
+        else:
+            text = ' '.join(text)
+
         options = uc.ChromeOptions()
         options.add_argument('--headless')
         browser = uc.Chrome(use_subprocess=True, options=options)
